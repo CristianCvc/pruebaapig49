@@ -3,7 +3,7 @@ require 'net/http'
 require 'json'
 
 def request (src, api_key)
-    url = URI(src + "&api_key=" + api_key)
+    url = URI("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10&api_key=eGI2GGO79VxU8CKtjpNYJs1zgaxhsKZCNElvNSOQ")
     https = Net::HTTP.new(url.host, url.port)
     https.use_ssl = true
     request = Net::HTTP::Get.new(url)
@@ -25,8 +25,8 @@ def buid_web_page (hash)
             '<title>Mars Curiosity Photos</title>',
             '<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">',
         '</head>',
-        '<body class="bg-secondary">',
-            '<ul class="container-fluid bg-dark">',
+        '<body class="container bg-secondary">',
+            '<ul class="container bg-dark">',
                 '!li',
             '</ul>',
         '</body>',
@@ -35,7 +35,7 @@ def buid_web_page (hash)
 
     img_array = []
     hash["photos"].each do |img_url|
-      img_array.append "<li><img src='#{img_url["img_src"]}'></li>"
+      img_array.append "<li><img src='#{img_url["img_src"]}' class='container mb-1'></li>"
     end
     file = File.open("index.html", "w")
     websetting.each do |tags|
@@ -47,7 +47,6 @@ def buid_web_page (hash)
             end
         end
     end
-    file.close
 end
 
 urlsrc = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=10"
